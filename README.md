@@ -32,7 +32,7 @@
 ## 🚀 Purpose / Objectif
 
 > **EN:** WebStyle Kit provides lightweight userstyles to enhance, modernize, and customize web interfaces without breaking native UI behavior. 
-></br>
+></br></br>
 > **FR:** WebStyle Kit fournit des styles utilisateurs légers pour améliorer, moderniser et personnaliser les interfaces web sans casser le comportement natif.
 
 ---
