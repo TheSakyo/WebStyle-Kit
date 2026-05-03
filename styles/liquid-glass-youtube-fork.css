@@ -1,0 +1,1505 @@
+/* ==UserStyle==
+@name         YouTube Liquid Glass
+@version      1.8.0
+@namespace    github.com/openstyles/stylus
+@description  A pure, animated "Liquid" theme for YouTube. Includes V2 fixes for Account Menu scrolling and Shorts Capsule hover effects. V1.6: Full Light & Dark mode support.
+@author       Shadow -> fork by TheSakyo
+@preprocessor stylus
+
+@var checkbox ambientToggle "Enable Super Ambient Mode" 1
+@var checkbox premiumToggle "Enable Premium Logo" 1
+==/UserStyle== */
+
+@-moz-document url-prefix("https://www.youtube.com/") {
+
+    /* ── 1. VARIABLES ─────────────────────────────────────────────────────── */
+
+    :root {
+        --blur: 10px;
+        --sf: #00000022;
+        --sf-surface: rgba(0, 0, 0, 0.42);
+        --shadow-base: 0 8px 32px #00000040, 1px 1px 1px #ffffff20 inset, -1px -1px 1px #ffffff10 inset;
+        --shadow-hover: 0 10px 36px #00000050, 1px 1px .5px #ffffff40 inset, -1px -1px .5px #ffffff20 inset;
+        --shadow-active: 0 4px 24px #00000030, 2px 2px 1px #ffffff20 inset, -2px -2px 1px #ffffff10 inset;
+        --bounce: .35s cubic-bezier(.3, 2, .5, 1);
+        --bounce-alt: .75s cubic-bezier(.2, 1.25, .2, 1);
+        color-scheme: light dark;
+    }
+
+    /* ── 2. DARK MODE ─────────────────────────────────────────────────────── */
+
+    html[dark],
+    html[dark] body {
+        background-color: #202020 !important;
+    }
+
+    html[dark],
+    [dark] {
+        --yt-spec-base-background: none !important;
+    }
+
+    /* ── 3. LIGHT MODE — VARIABLES ────────────────────────────────────────── */
+
+    html:not([dark]) {
+        --sf: rgba(255, 255, 255, 0.42);
+        --sf-surface: rgba(255, 255, 255, 0.42);
+        --shadow-base:
+            0 8px 32px rgba(0, 0, 0, 0.10),
+            1px 1px 1px rgba(255, 255, 255, 0.90) inset,
+            -1px -1px 1px rgba(0, 0, 0, 0.05) inset;
+        --shadow-hover:
+            0 10px 36px rgba(0, 0, 0, 0.14),
+            1px 1px .5px rgba(255, 255, 255, 0.95) inset,
+            -1px -1px .5px rgba(0, 0, 0, 0.06) inset;
+        --shadow-active:
+            0 4px 24px rgba(0, 0, 0, 0.07),
+            2px 2px 1px rgba(255, 255, 255, 0.90) inset,
+            -2px -2px 1px rgba(0, 0, 0, 0.05) inset;
+    }
+
+    /* ── 4. LIGHT MODE — TRANSPARENT BACKGROUNDS ──────────────────────────── */
+
+    html:not([dark]) ytd-app,
+    html:not([dark]) ytd-browse,
+    html:not([dark]) ytd-watch-flexy,
+    html:not([dark]) ytd-two-column-browse-results-renderer,
+    html:not([dark]) ytd-rich-grid-renderer,
+    html:not([dark]) ytd-section-list-renderer,
+    html:not([dark]) ytd-item-section-renderer,
+    html:not([dark]) ytd-two-column-watch-next-results,
+    html:not([dark]) #page-manager.ytd-app,
+    html:not([dark]) #content.ytd-app,
+    html:not([dark]) #primary,
+    html:not([dark]) #primary-inner,
+    html:not([dark]) #columns,
+    html:not([dark]) ytd-search,
+    html:not([dark]) ytd-search-header-renderer,
+    html:not([dark]) #frosted-glass.with-chipbar.ytd-app {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    /* ── 5. LIGHT MODE — MASTHEAD ─────────────────────────────────────────── */
+
+    html:not([dark]) ytd-masthead,
+    html:not([dark]) #masthead-container.ytd-app {
+        background: transparent !important;
+    }
+
+    html:not([dark]) #background.ytd-masthead {
+        opacity: 0 !important;
+    }
+
+    html:not([dark]) ytd-masthead #container.ytd-masthead,
+    html:not([dark]) .ytSearchboxComponentSuggestionsContainer,
+    html:not([dark]) ytd-multi-page-menu-renderer:not([menu-style="multi-page-menu-style-type-notifications"]):not([menu-style="multi-page-menu-style-type-system"]) {
+        background: rgba(255, 255, 255, .93) !important;
+        backdrop-filter: blur(20px) saturate(210%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(210%) !important;
+        border-radius: 10px !important;
+        margin: 0 5px;
+        box-shadow: var(--shadow-active) !important;
+        border: none !important;
+    }
+
+    html:not([dark]) #container.ytd-masthead yt-icon,
+    html:not([dark]) #container.ytd-masthead .yt-icon-shape,
+    html:not([dark]) #container.ytd-masthead .yt-spec-icon-shape,
+    html:not([dark]) #container.ytd-masthead button {
+        color: #0f0f0f !important;
+        fill: #0f0f0f !important;
+    }
+
+    html:not([dark]) ytd-masthead yt-icon-button:hover {
+        background: rgba(0, 0, 0, 0.08) !important;
+        border-radius: 50%;
+    }
+
+    html:not([dark]) ytd-topbar-logo-renderer.ytd-masthead {
+        background: rgba(186, 186, 186, .18) !important;
+    }
+
+    html:not([dark]) ytd-topbar-logo-renderer.ytd-masthead:hover {
+        background: rgba(167, 167, 167, .18) !important;
+    }
+
+    html:not([dark]) ytd-topbar-logo-renderer a#logo::after {
+        color: #0f0f0f !important;
+    }
+
+    html:not([dark]) ytd-topbar-logo-renderer #country-code {
+        color: #606060 !important;
+    }
+
+    /* ── 6. LIGHT MODE — BUTTON STATES ───────────────────────────────────── */
+
+    html:not([dark]) #search-icon-legacy.ytd-searchbox,
+    html:not([dark]) ytd-masthead#masthead #container .ytSearchboxComponentSearchButton,
+    html:not([dark]) ytd-masthead#masthead #container ytd-button-renderer yt-button-shape,
+    html:not([dark]) ytd-notification-topbar-button-renderer.ytd-masthead {
+        background: rgba(129, 128, 128, .18) !important;
+    }
+
+    html:not([dark]) ytd-notification-topbar-button-renderer.ytd-masthead {
+        color: black !important;
+        fill: black !important;
+    }
+
+    html:not([dark]) #search-icon-legacy.ytd-searchbox:hover,
+    html:not([dark]) ytd-masthead#masthead #container .ytSearchboxComponentSearchButton:hover,
+    html:not([dark]) ytd-masthead#masthead #container ytd-button-renderer yt-button-shape:hover,
+    html:not([dark]) .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--text:hover,
+    html:not([dark]) #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:hover,
+    html:not([dark]) #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:focus,
+    html:not([dark]) #trigger.tp-yt-paper-menu-button:hover,
+    html:not([dark]) ytd-topbar-menu-button-renderer.ytd-masthead:hover,
+    html:not([dark]) ytd-notification-topbar-button-renderer.ytd-masthead:hover,
+    html:not([dark]) yt-icon-button.ytd-masthead:hover {
+        background: rgba(103, 103, 103, .18) !important;
+    }
+
+    /* ── 7. LIGHT MODE — SEARCH BAR ──────────────────────────────────────── */
+
+    html:not([dark]) .ytSearchboxComponentInputBox {
+        background: rgba(255, 255, 255, 0.65) !important;
+        border: 1px solid rgba(0, 0, 0, 0.12) !important;
+        box-shadow: none !important;
+        clip-path: none !important;
+    }
+
+    html:not([dark]) .ytSearchboxComponentInput {
+        clip-path: none !important;
+    }
+
+    html:not([dark]) .ytSearchboxComponentInputBox:focus-within {
+        background: rgba(255, 255, 255, 0.92) !important;
+        border: 1px solid rgba(0, 0, 0, 0.25) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    /* ── 8. LIGHT MODE — MENUS & DROPDOWNS ───────────────────────────────── */
+
+    html:not([dark]) .ytSearchboxComponentSuggestionsContainer {
+        background: rgba(255, 252, 247, .92) !important;
+    }
+
+    html:not([dark]) ytd-multi-page-menu-renderer {
+        background: rgba(255, 252, 247, .92) !important;
+    }
+
+    html:not([dark]) .ytSearchboxComponentSuggestionsContainer .ytSuggestionComponentSuggestion:hover {
+        background: rgba(188, 192, 204, .37) !important;
+    }
+
+    html:not([dark]) .ytSearchboxComponentSuggestionsContainer .ytSuggestionComponentSuggestion .ytSuggestionComponentText {
+        color: #0f0f0f !important;
+        fill: #0f0f0f !important;
+    }
+
+    html:not([dark]) ytd-menu-popup-renderer,
+    html:not([dark]) ytd-video-preview,
+    html:not([dark]) #contentWrapper.tp-yt-iron-dropdown>*,
+    html:not([dark]) tp-yt-paper-dialog {
+        background: rgba(242, 242, 247, 0.88) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+    }
+
+    html:not([dark]) tp-yt-paper-listbox.yt-dropdown-menu {
+        background: rgba(242, 242, 247, 0.88) !important;
+    }
+
+    html[dark] a.yt-simple-endpoint.yt-dropdown-menu:hover {
+        --overlay-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    /* ── 9. LIGHT MODE — VIDEO PLAYER SETTINGS ───────────────────────────── */
+
+    html:not([dark]) .ytp-panel,
+    html:not([dark]) .ytp-popup.ytp-settings-menu {
+        background: rgba(242, 242, 247, 0.62) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    /* ── 10. LIGHT MODE — SIDEBAR ─────────────────────────────────────────── */
+
+    html:not([dark]) #guide-wrapper.ytd-app {
+        background: rgba(255, 255, 255, 0.58) !important;
+        backdrop-filter: blur(var(--blur)) !important;
+        -webkit-backdrop-filter: blur(var(--blur)) !important;
+        border-radius: 0 0 20px 20px !important;
+    }
+
+    html:not([dark]) #guide-content.ytd-app,
+    html:not([dark]) ytd-guide-renderer,
+    html:not([dark]) tp-yt-app-drawer {
+        background: transparent !important;
+    }
+
+    html:not([dark]) ytd-mini-guide-renderer.ytd-app {
+        border-radius: 0 0 16px 16px !important;
+    }
+
+    /* ── 11. LIGHT MODE — CHIPS & PANELS ─────────────────────────────────── */
+
+    html:not([dark]) ytd-browse[page-subtype=home] #chips:not(ytd-guide-renderer #sections),
+    html:not([dark]) ytd-browse[page-subtype=home] #chips {
+        background: rgba(255, 255, 255, 0.48) !important;
+    }
+
+    html:not([dark]) #description.ytd-watch-metadata,
+    html:not([dark]) #secondary-inner {
+        background: rgba(255, 255, 255, 0.48) !important;
+    }
+
+    html:not([dark]) .anchored-panel.ytd-shorts {
+        background: rgba(255, 255, 255, 0.48) !important;
+    }
+
+    html:not([dark]) .ytPlayerQuickActionButtonsHost:not(:empty) {
+        background-color: rgba(242, 242, 247, 0.60) !important;
+    }
+
+    html:not([dark]) .yt-badge-shape--thumbnail-default {
+        background: rgba(242, 242, 247, 0.80) !important;
+    }
+
+    html:not([dark]) ytd-rich-grid-slim-media:hover #dismissible,
+    html:not([dark]) ytd-reel-item-renderer:hover #dismissible {
+        background: rgba(255, 255, 255, 0.52) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+    }
+
+    /* ── 12. GLOBAL — BASE & TYPOGRAPHY ──────────────────────────────────── */
+
+    * {
+        font-family: "SF Pro Text", "Inter", "Segoe UI Variable Text", "Segoe UI", sans-serif !important;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .yt-spec-button-shape-next--mono .yt-spec-touch-feedback-shape__fill,
+    .yt-spec-button-shape-next--mono .yt-spec-touch-feedback-shape__stroke {
+        display: none !important;
+    }
+
+    /* ── 13. GLOBAL — MASTHEAD & HEADER ──────────────────────────────────── */
+
+    ytd-app,
+    ytd-masthead,
+    #page-manager.ytd-app,
+    #content.ytd-app {
+        background: transparent !important;
+    }
+
+    #frosted-glass.with-chipbar.ytd-app {
+        background: none !important;
+        backdrop-filter: none !important;
+    }
+
+    #masthead-container {
+        background: transparent !important;
+    }
+
+    ytd-masthead #container {
+        background: var(--sf) !important;
+        backdrop-filter: blur(var(--blur)) !important;
+        -webkit-backdrop-filter: blur(var(--blur)) !important;
+        border-radius: 10px !important;
+        margin: 0 5px;
+        box-shadow: var(--shadow-active) !important;
+        border: none !important;
+    }
+
+    ytd-topbar-logo-renderer {
+        border-radius: 200px !important;
+        padding: 0px !important;
+        max-height: 45px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.02) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    tp-yt-iron-dropdown:has(#contentWrapper ytd-multi-page-menu-renderer[menu-style="multi-page-menu-style-type-notifications"]) {
+        border-radius: 10px !important;
+        overflow: hidden !important;
+    }
+
+    tp-yt-iron-dropdown:has(#contentWrapper ytd-multi-page-menu-renderer[menu-style="multi-page-menu-style-type-notifications"]) #contentWrapper {
+        border: none !important;
+        border-radius: 0px !important;
+    }
+
+
+    /* ── 14. GLOBAL — SEARCH BAR ─────────────────────────────────────────── */
+
+    .ytSearchboxComponentInputBox {
+        border-radius: 2000px !important;
+        transition: all var(--bounce) !important;
+    }
+
+    .ytSearchboxComponentInput {
+        mix-blend-mode: difference;
+    }
+
+    .ytSearchboxComponentDesktop .ytSearchboxComponentClearButton {
+        margin-right: 10px;
+        width: 30px !important;
+        height: 30px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    ytd-masthead#masthead #container .ytSearchboxComponentSearchButton,
+    #search-icon-legacy.ytd-searchbox {
+        margin-left: 10px !important;
+        border-radius: 2000px !important;
+        border: none !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: transform 0.6s cubic-bezier(0.2, 1.25, 0.2, 1),
+            box-shadow var(--bounce),
+            background var(--bounce) !important;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        & yt-icon,
+        & .yt-spec-icon-shape {
+            position: relative;
+            z-index: 2;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: var(--shadow-hover) !important;
+            transform: scale(1.1);
+            z-index: 10 !important;
+
+            &::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
+            }
+        }
+
+        &:active {
+            transform: scale(0.95);
+            box-shadow: var(--shadow-active) !important;
+            transition: transform 0.1s !important;
+        }
+    }
+
+    .ytSearchboxComponentSuggestionsContainer {
+        top: 55px !important;
+        background: rgba(28, 28, 30, 0.92) !important;
+        border: none !important;
+        box-shadow: var(--shadow-hover) !important;
+        border-radius: 20px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+    }
+
+
+    ytd-multi-page-menu-renderer {
+        background: rgba(28, 28, 30, 0.92) !important;
+        border: none !important;
+        box-shadow: var(--shadow-hover) !important;
+        border-radius: 10px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+    }
+
+
+    .ytSuggestionComponentRoundedSuggestion {
+        margin: 5px 10px;
+        border: none !important;
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.01) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    /* ── 15. GLOBAL — SIDEBAR / GUIDE ────────────────────────────────────── */
+
+    #guide-content.ytd-app {
+        background: transparent;
+    }
+
+    #guide-wrapper.ytd-app {
+        background: var(--sf) !important;
+        border-radius: calc(20px * 1.15) / 20px !important;
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: box-shadow var(--bounce) !important;
+    }
+
+    ytd-guide-renderer #sections {
+        margin-left: 8px !important;
+    }
+
+    #sections.ytd-guide-renderer>*.ytd-guide-renderer:first-child {
+        padding: 10px 3px !important;
+    }
+
+    #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        border-radius: 300px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce), border-radius var(--bounce) !important;
+    }
+
+    #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:hover,
+    #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:focus {
+        background: var(--sf) !important;
+        border-radius: 2000px !important;
+        padding: 0px !important;
+        box-shadow: var(--shadow-hover) !important;
+        transform: scale(1.05);
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce), border-radius var(--bounce) !important;
+    }
+
+    #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:active {
+        transform: scale(0.98);
+        box-shadow: var(--shadow-active) !important;
+    }
+
+    ytd-mini-guide-renderer.ytd-app {
+        top: 70px !important;
+        left: 10px !important;
+    }
+
+    ytd-mini-guide-entry-renderer {
+        margin-top: 10px !important;
+        border-radius: 20px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    ytd-app[frosted-glass-exp] tp-yt-app-drawer.ytd-app[persistent] {
+        top: 75px !important;
+        left: 8px !important;
+    }
+
+    /* ── 16. GLOBAL — CHIPS BAR ──────────────────────────────────────────── */
+
+    ytd-browse[page-subtype=home] #chips:not(ytd-guide-renderer #sections),
+    ytd-browse[page-subtype=home] #chips {
+        margin: 16px 0 0 0 !important;
+        border-radius: 2000px !important;
+        box-shadow: var(--shadow-active) !important;
+        backdrop-filter: blur(var(--blur)) !important;
+        -webkit-backdrop-filter: blur(var(--blur)) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        padding: 0 10px !important;
+        background: var(--sf) !important;
+        border: none !important;
+        transition: box-shadow var(--bounce) !important;
+    }
+
+    .yt-chip-shape {
+        background-color: transparent !important;
+    }
+
+    .ytChipBarViewModelChipBarScrollContainer {
+        padding: 5px 10px !important;
+    }
+
+    yt-chip-cloud-chip-renderer.yt-chip-cloud-renderer {
+        padding: 10px 0 !important;
+    }
+
+    iron-selector.yt-chip-cloud-renderer {
+        padding-left: 5px !important;
+    }
+
+    .ytChipShapeChip {
+        margin: 0 5px !important;
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    /* ── 17. GLOBAL — CONTENT LAYOUT ─────────────────────────────────────── */
+
+    #contents.ytd-page-manager {
+        margin-top: 0;
+        margin-left: 16px;
+    }
+
+    #contents.ytd-rich-grid-renderer {
+        margin-left: 30px !important;
+        margin-right: 20px !important;
+    }
+
+    #description.ytd-watch-metadata,
+    #secondary-inner {
+        position: relative !important;
+        overflow: hidden !important;
+        padding: 0 10px !important;
+        margin: 16px 16px 0 0 !important;
+        border-radius: 34px !important;
+        background: var(--sf) !important;
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: box-shadow var(--bounce) !important;
+    }
+
+    ytd-search[has-search-header][has-bigger-thumbs] #header.ytd-search {
+        margin: 5px auto !important;
+    }
+
+    .ytContextualSheetLayoutHost {
+        padding: 13px !important;
+    }
+
+    .ytContextualSheetLayoutContentContainer,
+    .ytChipBarViewModelHost,
+    .immersive-header-content.ytd-playlist-header-renderer {
+        overflow: visible !important;
+    }
+
+    /* ── 18. GLOBAL — VIDEO PLAYER ───────────────────────────────────────── */
+
+    .ytp-panel,
+    .ytp-popup.ytp-settings-menu {
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+        background: rgba(0, 0, 0, 0.35) !important;
+    }
+
+    .ytp-delhi-modern .ytp-chrome-controls .ytp-button:not(.ytp-right-controls .ytp-button, .ytp-volume-icon.ytp-button),
+    .ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-chrome-bottom.ytp-volume-slider-active .ytp-volume-area,
+    .ytp-delhi-modern .ytp-time-wrapper:not(.ytp-miniplayer-ui *),
+    .ytp-delhi-modern .ytp-chrome-controls .ytp-right-controls {
+        border: none !important;
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+        color: white !important;
+
+        &:hover {
+            background: var(--sf-surface) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    .ytp-delhi-modern .ytp-chrome-controls .ytp-right-controls {
+        &:hover {
+            transform: scale(1.02);
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+
+    .ytp-delhi-modern .ytp-time-wrapper:not(.ytp-miniplayer-ui *),
+    .ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-chrome-bottom.ytp-volume-slider-active .ytp-volume-area {
+        &:hover {
+            transform: scale(1.1) !important;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    .ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-volume-area {
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+
+        &:hover {
+            box-shadow: var(--shadow-hover) !important;
+            transform: scale(1.1);
+        }
+    }
+
+    .ytp-delhi-modern .ytp-chrome-controls .ytp-right-controls .ytp-button::before {
+        transition: background var(--bounce) !important;
+    }
+
+    .ytp-delhi-modern .ytp-chapter-container {
+        width: 100% !important;
+        padding-left: 10px;
+    }
+
+    .ytp-delhi-modern .ytp-popup {
+        background: none !important;
+        border-radius: 20px !important;
+    }
+
+    video.video-stream.html5-main-video,
+    .html5-video-player {
+        border-radius: 20px !important;
+    }
+
+    .ytPlayerProgressBarDragContainer {
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .ytProgressBarLineProgressBarLine,
+    .ytProgressBarLineProgressBarBackground,
+    .ytProgressBarLineProgressBarLoaded,
+    .ytProgressBarLineProgressBarHovered,
+    .ytProgressBarLineProgressBarPlayed,
+    .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
+        border-radius: 20px !important;
+    }
+
+    .ytInlinePlayerControlsTopRightControlsCircleButton {
+        background: var(--sf) !important;
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+        cursor: pointer !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    .ytPlayerQuickActionButtonsHost:not(:empty) {
+        background-color: var(--sf) !important;
+    }
+
+    .ytp-fullscreen-grid-expand-button {
+        background: none !important;
+        border: none !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+
+        &:hover {
+            background: var(--sf) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    /* ── 19. GLOBAL — MENUS & POPUPS ─────────────────────────────────────── */
+
+    .ytp-panel {
+        background: var(--sf) !important;
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: box-shadow var(--bounce) !important;
+        border-radius: 20px !important;
+        padding: 0 5px !important;
+    }
+
+    .ytp-popup.ytp-delhi-modern-contextmenu {
+        background: none !important;
+        padding: 0 5px !important;
+        border-radius: 20px !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+    }
+
+    .ytp-menuitem:not([aria-disabled=true]) {
+        margin-left: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+    }
+
+    .ytp-menuitem:not([aria-disabled=true]):hover {
+        border-radius: 2000px !important;
+        box-shadow: var(--shadow-hover) !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    ytd-menu-popup-renderer,
+    ytd-video-preview,
+    #contentWrapper.tp-yt-iron-dropdown>*,
+    tp-yt-paper-dialog {
+        background: var(--sf) !important;
+        border-radius: 30px !important;
+        border: none !important;
+        box-shadow: var(--shadow-hover) !important;
+        max-width: none !important;
+        overflow: visible !important;
+        transform: scale(1) translate(var(--ytd-video-preview-translate-left), var(--ytd-video-preview-translate-top));
+        transition: opacity .2s ease-in, transform .16s ease-out .2s;
+    }
+
+    ytd-menu-service-item-renderer {
+        min-width: 150px !important;
+        border-radius: 20px !important;
+    }
+
+    #player-container.ytd-video-preview {
+        background: none !important;
+    }
+
+    tp-yt-paper-dialog {
+        border-radius: 20px !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: box-shadow var(--bounce) !important;
+    }
+
+    tp-yt-paper-dialog ytd-voice-search-dialog-renderer {
+        margin: 0 !important;
+    }
+
+    ytd-simple-menu-header-renderer {
+        background: none !important;
+    }
+
+    #items.yt-multi-page-menu-section-renderer>*.yt-multi-page-menu-section-renderer:not([compact-link-style=compact-link-style-type-disclaimer]):not(ytd-message-renderer) {
+        margin: 10px;
+    }
+
+    #items.yt-multi-page-menu-section-renderer>*.yt-multi-page-menu-section-renderer:not([compact-link-style=compact-link-style-type-disclaimer]):not(ytd-message-renderer):hover {
+        border: none !important;
+        border-radius: 35px !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            transform: scale(0.95);
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    tp-yt-paper-listbox {
+        padding: 10px !important;
+    }
+
+    tp-yt-paper-listbox.yt-dropdown-menu {
+        background-color: var(--yt-main-app-background, #fff) !important;
+        background-image: linear-gradient(var(--sf-surface), var(--sf-surface)) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        align-items: stretch !important;
+    }
+
+    tp-yt-paper-listbox.yt-dropdown-menu>* {
+        width: 100% !important;
+    }
+
+    tp-yt-paper-listbox.yt-dropdown-menu tp-yt-paper-item.yt-dropdown-menu:hover {
+        background: none !important;
+    }
+
+    tp-yt-paper-listbox.yt-dropdown-menu .iron-selected.yt-dropdown-menu {
+        box-shadow: var(--shadow-hover) !important;
+    }
+
+    a.yt-simple-endpoint.yt-dropdown-menu {
+        border: none !important;
+        border-radius: 10px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background-color var(--bounce) !important;
+
+        &:hover {
+            border-radius: 10px !important;
+            transform: scale(1.01) !important;
+            box-shadow: var(--shadow-hover) !important;
+
+            /* On définit la couleur du calque selon le thème de YouTube */
+            /* En mode clair : on assombrit (noir 0.15) */
+            --overlay-color: rgba(0, 0, 0, 0.15);
+
+            background-image:
+                linear-gradient(var(--overlay-color), var(--overlay-color)),
+                linear-gradient(var(--sf-surface), var(--sf-surface)) !important;
+        }
+
+        &:active {
+            border-radius: 10px !important;
+        }
+    }
+
+    #trigger.tp-yt-paper-menu-button {
+        padding: 10px !important;
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+            background: var(--sf) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    html body[rounded-container] tp-yt-paper-tooltip .tp-yt-paper-tooltip[style-target=tooltip] {
+        min-width: 100px;
+        padding: 7px 10px;
+        text-align: center;
+    }
+
+    ytd-multi-page-menu-renderer .tp-yt-paper-tooltip[style-target="tooltip"],
+    ytd-multi-page-menu-renderer .tp-yt-paper-tooltip:not([hidden]) {
+        border: none !important;
+        pointer-events: none !important;
+        background: rgba(60, 60, 60, 0.95) !important;
+        box-shadow: var(--shadow-active) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        color: white !important;
+        padding: 8px !important;
+        border-radius: 6px !important;
+        white-space: nowrap !important;
+    }
+
+    ytd-multi-page-menu-renderer .tp-yt-paper-tooltip:not([hidden]) {
+        position: fixed !important;
+        z-index: 2147483647 !important;
+        transform: translate(-150px, -50px) !important;
+    }
+
+    yt-list-view-model[role="menu"] yt-list-item-view-model,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model {
+        border-radius: 2000px !important;
+        margin: 2px 4px !important;
+        background-color: transparent !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+    }
+
+    yt-list-view-model[role="menu"] yt-list-item-view-model:hover,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        box-shadow: var(--shadow-hover) !important;
+        transform: scale(1.02) !important;
+    }
+
+    yt-list-view-model[role="menu"] yt-list-item-view-model:active,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model:active {
+        transform: scale(0.96) !important;
+        box-shadow: var(--shadow-active) !important;
+    }
+
+    /* Shine Effect */
+    yt-list-view-model[role="menu"] yt-list-item-view-model,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    yt-list-view-model[role="menu"] yt-list-item-view-model::before,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    yt-list-view-model[role="menu"] yt-list-item-view-model:hover::before,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model:hover::before {
+        left: 150%;
+        transition: left 0.75s ease-in-out;
+    }
+
+    yt-list-view-model[role="menu"] yt-list-item-view-model>div,
+    yt-list-view-model[role="menu"] yt-download-list-item-view-model>div {
+        position: relative;
+        z-index: 2;
+    }
+
+
+    /* ── 20. GLOBAL — BUTTONS ────────────────────────────────────────────── */
+
+    ytd-masthead#masthead #container ytd-button-renderer yt-button-shape,
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--text,
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--tonal,
+    ytd-notification-topbar-button-renderer.ytd-masthead,
+    yt-icon-button.ytd-masthead,
+    ytd-menu-renderer.ytd-watch-metadata button-view-model,
+    .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text,
+    ytd-comment-view-model[optimal-reading-width-comments] #action-menu.ytd-comment-view-model,
+    tp-yt-paper-menu-button.yt-dropdown-menu:not(yt-sort-filter-sub-menu-renderer *),
+    ytd-comments-header-renderer tp-yt-paper-menu-button.yt-dropdown-menu:not(yt-sort-filter-sub-menu-renderer *) {
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+
+        &:hover {
+            box-shadow: var(--shadow-hover) !important;
+            transform: scale(1.1);
+        }
+
+        &:active {
+            transform: scale(0.95);
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    ytd-masthead#masthead #container ytd-button-renderer yt-button-shape,
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--text,
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--tonal,
+    ytd-notification-topbar-button-renderer.ytd-masthead,
+    yt-icon-button.ytd-masthead,
+    ytd-menu-renderer.ytd-watch-metadata button-view-model,
+    .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: transform 0.6s cubic-bezier(0.2, 1.25, 0.2, 1),
+            box-shadow var(--bounce),
+            background var(--bounce) !important;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        &>div,
+        &>yt-icon,
+        &>span {
+            position: relative;
+            z-index: 2;
+        }
+
+        &:hover {
+
+            z-index: 10 !important;
+
+            &::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
+            }
+        }
+
+        &:active {
+            transition: transform 0.1s !important;
+        }
+    }
+
+    ytd-masthead#masthead #container ytd-button-renderer yt-button-shape,
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--tonal,
+    yt-icon-button.ytd-masthead,
+    ytd-topbar-menu-button-renderer.ytd-masthead,
+    ytd-notification-topbar-button-renderer.ytd-masthead,
+    ytd-menu-renderer.ytd-watch-metadata button-view-model,
+    ytd-menu-renderer.ytd-watch-metadata .ytd-download-button-renderer,
+    #trailing-button.ytd-playlist-panel-renderer,
+    ytd-menu-renderer .ytd-menu-renderer[style-target=button],
+    .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal {
+        border-radius: 2000px !important;
+        background-color: transparent !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            box-shadow: var(--shadow-hover) !important;
+            transform: scale(1.1);
+        }
+
+        &:active {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text {
+        margin-right: 0 !important;
+        border-radius: 2000px !important;
+        z-index: 30000 !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.04) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    .yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--text:hover {
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: box-shadow var(--bounce) !important;
+    }
+
+    .yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--filled,
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--filled {
+        border: none;
+        box-shadow: var(--shadow-active) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+        }
+    }
+
+    .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--text:hover {
+        background: var(--sf) !important;
+    }
+
+    .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled {
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer !important;
+
+        &:hover {
+            transform: scale(1.1);
+            color: white !important;
+            animation: youtubeRedPulse 5s ease-in-out infinite;
+        }
+    }
+
+    @keyframes youtubeRedPulse {
+        0% {
+            box-shadow: inset 0 0 25px red, inset 0 0 50px red, 0 0 15px red, 0 0 30px red;
+        }
+
+        50% {
+            box-shadow: inset 0 0 25px #f06, inset 0 0 50px #f06, 0 0 15px #f06, 0 0 30px #f06;
+        }
+
+        100% {
+            box-shadow: inset 0 0 25px red, inset 0 0 50px red, 0 0 15px red, 0 0 30px red;
+        }
+    }
+
+    .yt-spec-touch-feedback-shape--thumbnail-size-large .yt-spec-touch-feedback-shape__stroke,
+    .yt-spec-touch-feedback-shape--thumbnail-size-large .yt-spec-touch-feedback-shape__fill,
+    .yt-spec-touch-feedback-shape--thumbnail-size-large .yt-spec-touch-feedback-shape__hover-effect {
+        padding: 100px !important;
+        border-radius: 30px !important;
+        box-shadow: var(--shadow-hover) !important;
+    }
+
+    /* ── 21. GLOBAL — LIKE / DISLIKE ─────────────────────────────────────── */
+
+    ytd-menu-renderer.ytd-watch-metadata {
+        display: flex !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata dislike-button-view-model {
+        margin-left: -4px !important;
+    }
+
+    .ytLikeButtonViewModelHost {
+        margin-right: 5px;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata like-button-view-model .yt-spec-button-shape-next--tonal::after,
+    ytd-menu-renderer.ytd-watch-metadata dislike-button-view-model .yt-spec-button-shape-next--tonal::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata .yt-spec-button-shape-next--tonal::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata like-button-view-model button-view-model,
+    ytd-menu-renderer.ytd-watch-metadata like-button-view-model yt-button-shape .yt-spec-button-shape-next--tonal {
+        border-radius: 2000px 0 0 2000px !important;
+        background-color: transparent !important;
+        outline: none !important;
+        border: none !important;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata dislike-button-view-model button-view-model,
+    ytd-menu-renderer.ytd-watch-metadata dislike-button-view-model yt-button-shape .yt-spec-button-shape-next--tonal {
+        border-radius: 0 2000px 2000px 0 !important;
+        background-color: transparent !important;
+        outline: none !important;
+        border: none !important;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata like-button-view-model:hover {
+        z-index: 10 !important;
+        transform: translateX(-5px) scale(1.05);
+        transition: transform 0.4s ease-out !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata dislike-button-view-model:hover {
+        z-index: 10 !important;
+        transform: translateX(5px) scale(1.05);
+        transition: transform 0.4s ease-out !important;
+    }
+
+    ytd-menu-renderer.ytd-watch-metadata yt-button-shape * {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    /* ── 22. GLOBAL — PLAYLIST ───────────────────────────────────────────── */
+
+    ytd-playlist-panel-video-renderer[selected][use-color-palette],
+    ytd-playlist-panel-video-renderer[selected][use-color-palette]:hover:not(.dragging) {
+        border-radius: 30px !important;
+        padding: 10px !important;
+        box-shadow: var(--shadow-active) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+    }
+
+    ytd-playlist-panel-video-renderer.ytd-playlist-panel-renderer {
+        border-radius: 30px !important;
+        padding: 10px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+        margin: 5px 0 !important;
+
+        &:hover {
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    .yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-start:hover::after {
+        background: none !important;
+    }
+
+    .header.ytd-playlist-panel-renderer {
+        background: none !important;
+    }
+
+    #container.ytd-playlist-panel-renderer {
+        border: none !important;
+    }
+
+    .immersive-header-container.ytd-playlist-header-renderer {
+        border: none !important;
+        box-shadow: var(--shadow-active) !important;
+    }
+
+    ytd-playlist-video-renderer:not(.dragging) {
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+        margin: 5px;
+        border-radius: 15px !important;
+
+        &:hover {
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    /* ── 23. GLOBAL — SHORTS ─────────────────────────────────────────────── */
+
+    ytd-rich-grid-slim-media {
+        z-index: 1 !important;
+    }
+
+    ytd-rich-grid-slim-media:hover {
+        z-index: 2000 !important;
+    }
+
+    ytd-rich-grid-slim-media #dismissible,
+    ytd-reel-item-renderer #dismissible {
+        transition: all var(--bounce) !important;
+        border-radius: 15px !important;
+        border: 2px solid transparent !important;
+    }
+
+    ytd-rich-grid-slim-media:hover #dismissible,
+    ytd-reel-item-renderer:hover #dismissible {
+        border-radius: 30px !important;
+        background: var(--sf) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: var(--shadow-hover) !important;
+        transform: scale(1.05) !important;
+        padding-bottom: 12px !important;
+        margin-bottom: -12px !important;
+    }
+
+    .anchored-panel.ytd-shorts {
+        background: var(--sf) !important;
+        padding: 5px;
+        border: none !important;
+        border-radius: 30px !important;
+        box-shadow: var(--shadow-active) !important;
+        margin-top: 15px !important;
+    }
+
+    ytd-engagement-panel-title-header-renderer[shorts-panel][enable-anchored-panel] #header.ytd-engagement-panel-title-header-renderer {
+        border-bottom: none;
+    }
+
+    ytd-engagement-panel-section-list-renderer[match-content-theme] #content.ytd-engagement-panel-section-list-renderer {
+        background: none !important;
+    }
+
+    ytd-engagement-panel-section-list-renderer:not([live-chat-engagement-panel]) {
+        border: none !important;
+    }
+
+    /* ── 24. GLOBAL — COMMENTS ───────────────────────────────────────────── */
+
+    ytd-comments-header-renderer[engagement-panel] {
+        border-radius: 20px !important;
+        margin: 10px !important;
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+    }
+
+    ytd-item-section-renderer[static-comments-header][enable-anchored-panel] #header.ytd-item-section-renderer {
+        background: none !important;
+    }
+
+    #subheader.ytd-engagement-panel-title-header-renderer:not(:empty) {
+        border-radius: 200px !important;
+        border: none !important;
+        box-shadow: var(--shadow-hover) !important;
+    }
+
+    ytd-commentbox yt-button-shape button {
+        backdrop-filter: blur(var(--blur)) !important;
+        -webkit-backdrop-filter: blur(var(--blur)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce), background var(--bounce) !important;
+        border-radius: 20px !important;
+    }
+
+    ytd-commentbox yt-button-shape button:hover {
+        transform: scale(1.05) !important;
+        box-shadow: var(--shadow-hover) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    ytd-commentbox yt-button-shape button:active {
+        transform: scale(0.95) !important;
+        box-shadow: var(--shadow-active) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    ytd-commentbox #cancel-button yt-button-shape button,
+    ytd-commentbox #submit-button yt-button-shape button {
+        padding: 0 16px !important;
+    }
+
+
+    ytd-commentbox yt-touch-feedback-shape {
+        display: none !important;
+    }
+
+    /* ── 25. GLOBAL — MISC ELEMENTS ──────────────────────────────────────── */
+
+    .yt-badge-shape--thumbnail-default {
+        background: var(--sf) !important;
+        border-radius: 20px !important;
+        border: none !important;
+        box-shadow: var(--shadow-base) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+    }
+
+    ytd-thumbnail-overlay-toggle-button-renderer {
+        background: var(--sf) !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+        border-radius: 2000px !important;
+
+        &:hover {
+            transform: scale(1.1) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    ytd-thumbnail-overlay-toggle-button-renderer[use-expandable-tooltip][hovered] #label.ytd-thumbnail-overlay-toggle-button-renderer {
+        background-color: black !important;
+        margin-right: 10px;
+        border-radius: 10px !important;
+        box-shadow: var(--shadow-hover) !important;
+    }
+
+    ytd-expandable-metadata-renderer {
+        padding: 5px !important;
+        border-radius: 20px !important;
+    }
+
+    ytd-expandable-metadata-renderer:not([is-expanded]) {
+        border-radius: 2000px !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    ytd-expandable-metadata-renderer:not([is-expanded]) #header.ytd-expandable-metadata-renderer:hover {
+        background: none !important;
+    }
+
+    ytd-macro-markers-list-item-renderer[modern][layout=MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL]:not([carousel-type=MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_TEXT_ONLY]) {
+        border-radius: 10px !important;
+        border: none !important;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            box-shadow: var(--shadow-hover) !important;
+        }
+
+        &:active {
+            box-shadow: var(--shadow-active) !important;
+        }
+    }
+
+    ytd-macro-markers-list-item-renderer {
+        border-radius: 10px !important;
+        margin: 5px;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+
+        &:hover {
+            transform: scale(1.02) !important;
+            box-shadow: var(--shadow-hover) !important;
+        }
+    }
+
+    ytd-alert-with-button-renderer[type=INFO] {
+        box-shadow: var(--shadow-base) !important;
+        border-radius: 20px;
+        transition: transform var(--bounce), box-shadow var(--bounce) !important;
+    }
+
+    /* ── 26. TOGGLEABLE — AMBIENT MODE ───────────────────────────────────── */
+
+    if ambientToggle {
+        #cinematics.ytd-watch-flexy {
+            filter: saturate(250%) blur(10px) contrast(1.1) brightness(1.3);
+            transform: scale(3);
+            opacity: 1;
+            mix-blend-mode: lighten;
+        }
+
+        body {
+            overflow-x: hidden !important;
+        }
+
+        .style-scope.ytd-watch-flexy#player-container-inner {
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0px 16px 32px #00000054, 0px 0px 4px #00000038;
+        }
+
+        @media (width: 1920px) {
+            #cinematics.ytd-watch-flexy {
+                transform: scaleX(1.8) scaleY(1.7) translateX(130px) translateY(100px);
+            }
+        }
+
+        @media (width: 1280px) {
+            #cinematics.ytd-watch-flexy {
+                transform: scaleX(2) scaleY(2.1) translateX(190px) translateY(100px) !important;
+            }
+        }
+    }
+
+    /* ── 27. TOGGLEABLE — PREMIUM LOGO ───────────────────────────────────── */
+
+    if premiumToggle {
+        ytd-topbar-logo-renderer {
+            margin-left: 16px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        ytd-topbar-logo-renderer a#logo {
+            display: flex !important;
+            align-items: center !important;
+            text-decoration: none !important;
+        }
+
+        ytd-topbar-logo-renderer a#logo>* {
+            display: none !important;
+        }
+
+        ytd-topbar-logo-renderer a#logo::before {
+            content: "";
+            display: block !important;
+            width: 34px !important;
+            height: 24px !important;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgNzAiPjxwYXRoIGZpbGw9IiNGRjAwMDAiIGQ9Ik05Ny43LDExQzk2LjUsNi42LDkzLDMuMSw4OC42LDJDODAuOCwwLDUwLDAsNTAsMFMxOS4yLDAsMTEuNCwyQzcsMy4xLDMuNSw2LjYsMi4zLDExQzAsMTguOCwwLDM1LDAsMzVzMCwxNi4yLDIuMywyNGMxLjIsNC40LDQuNyw3LjksOS4xLDlDMTkuMiw3MCw1MCw3MCw1MCw3MHMzMC44LDAsMzguNi0yYzQuNC0xLjIsNy45LTQuNyw5LjEtOUMxMDAsNTEuMiwxMDAsMzUsMTAwLDM1UzEwMCwxOC44LDk3LjcsMTF6Ii8+PHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQwLDUwbDI2LTE1TDQwLDIwVjUweiIvPjwvc3ZnPg==") !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            margin-right: 2px !important;
+        }
+
+        ytd-topbar-logo-renderer a#logo::after {
+            content: "Premium";
+            display: block !important;
+            font-family: "YouTube Sans", "Roboto", "Segoe UI", Arial, sans-serif !important;
+            font-size: 22px !important;
+            font-weight: 500 !important;
+            color: #FFFFFF !important;
+            margin-left: 2px !important;
+            letter-spacing: -0.5px !important;
+            line-height: 22px !important;
+        }
+
+        ytd-topbar-logo-renderer #country-code {
+            position: relative !important;
+            display: block !important;
+            margin-left: 2px !important;
+            top: -8px !important;
+            color: #aaaaaa !important;
+            font-size: 11px !important;
+            font-family: "Roboto", sans-serif !important;
+            font-weight: 500 !important;
+        }
+    }
+}

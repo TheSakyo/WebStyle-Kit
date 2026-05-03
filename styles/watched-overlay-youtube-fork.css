@@ -1,0 +1,58 @@
+/* ==UserStyle==
+@name         Youtube WATCHED overlay
+@version      20260502.00.00
+@namespace    https://userstyles.world/user/amkitakk
+@description  Adds a "watched" overlay to videos that have been watched.
+@author       amkitakk -> fork by TheSakyo
+@license      No License
+@var text     watched-label "Texte affiché" "WATCHED"
+@var color    overlay-color "Couleur du fond" rgba(0, 0, 0, 0.8)
+@var color    text-color    "Couleur du texte" #ffffff
+==/UserStyle== */
+
+@-moz-document domain("youtube.com") {
+
+    /* Dim background without affecting layout flow */
+    yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model) {
+        background: var(--overlay-color) !important;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        height: 100% !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* Label positioned independently to avoid pushing the red bar */
+    yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model):before {
+        content: var(--watched-label);
+        color: var(--text-color);
+
+        /* Typography */
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+
+        /* Placement: perfectly calculated to stay above the bar */
+        position: absolute !important;
+        left: 12px !important;
+        bottom: 12px !important;
+        z-index: 10 !important;
+        pointer-events: none;
+    }
+
+    /* Force the progress bar to stick to the absolute bottom edge */
+    yt-thumbnail-overlay-progress-bar-view-model {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
