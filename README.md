@@ -24,7 +24,7 @@
 🔀 Forks / Versions modifiées
 
 > **EN:** This project may include forked or modified versions of existing styles. In such cases, the filename will explicitly end with `-fork` to indicate it is a customized variant.
-> </br>
+</br>
 > **FR:** Ce projet peut inclure des versions forkées ou modifiées de styles existants. Dans ce cas, le nom du fichier se termine explicitement par `-fork` afin d’indiquer qu’il s’agit d’une variante personnalisée.
 
 ---
