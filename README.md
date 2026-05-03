@@ -41,7 +41,6 @@
 
 * Stylus (recommended)
 * Chrome / Edge / Firefox
-* (Compatible with most modern browsers || Compatible avec la plupart des navigateurs modernes)
 
 ---
 
