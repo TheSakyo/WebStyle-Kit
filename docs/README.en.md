@@ -42,7 +42,7 @@ styles/
 
 ---
 
-## ✨ Features
+## 🪄 Features
 
 - Lightweight CSS architecture  
 - No external dependencies  
