@@ -1,4 +1,4 @@
-# ⭐ WebStyle Kit
+# WebStyle Kit
 
 **EN:** Modern userstyle collection to customize and enhance the web experience.  
 </br>
