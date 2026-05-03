@@ -1,13 +1,63 @@
-# WebStyle Kit - Français
+# 🎨 WebStyle Kit
 
-Collection moderne de styles utilisateurs pour personnaliser et améliorer l’expérience web.
+Une collection légère de userstyles modernes conçue pour améliorer et personnaliser l’expérience web sans casser le comportement natif des interfaces.
 
-## Structure
-Chaque style est autonome et peut être utilisé indépendamment via Stylus ou des extensions similaires.
+---
 
-## Objectif
-WebStyle Kit fournit des styles utilisateurs légers pour améliorer, moderniser et personnaliser les interfaces web sans casser le comportement natif. Inclut des thèmes Stylus modifiés et des forks comme Liquid Glass.
+## ✨ Aperçu
 
-## Compatibilité
+WebStyle Kit est un ensemble modulaire de styles utilisateurs axé sur l’esthétique, l’ergonomie et la cohérence.  
+Chaque style s’intègre parfaitement aux sites existants, en améliorant l’expérience visuelle sans modifier les fonctionnalités principales.
+
+---
+
+## 📦 Structure
+
+Chaque style est totalement indépendant et peut être installé ou supprimé sans dépendances.
+
+```
+styles/
+   └── example-style.css
+   └── another-style.scss
+   └── ...
+```
+
+---
+
+## 🚀 Objectif
+
+- Moderniser les interfaces web  
+- Améliorer la cohérence visuelle entre les plateformes  
+- Ajouter des améliorations UI de haute qualité  
+- Supporter les thèmes personnalisés basés sur Stylus et ses forks  
+- Garder des styles légers et non intrusifs  
+
+---
+
+## 🔧 Compatibilité
+
 - Stylus (recommandé)
 - Chrome / Edge / Firefox
+- Compatible avec la majorité des navigateurs modernes
+
+---
+
+## 🎨 Fonctionnalités
+
+- Architecture CSS légère  
+- Aucune dépendance externe  
+- Système de styles modulaire  
+- Overrides UI sécurisés  
+- Design compatible thèmes (mode clair/sombre)  
+
+---
+
+## 🛡️ Philosophie
+
+Améliorer, sans remplacer.
+
+---
+
+## 📜 Licence
+
+GPL 3.0
