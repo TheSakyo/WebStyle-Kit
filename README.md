@@ -1,8 +1,7 @@
 # WebStyle Kit
 
-| EN | FR |
-|----|----|
-| Modern userstyle collection to customize and enhance the web experience. | Collection moderne de styles utilisateurs pour personnaliser et améliorer l’expérience web. |
+**EN:** Modern userstyle collection to customize and enhance the web experience.  
+**FR:** Collection moderne de styles utilisateurs pour personnaliser et améliorer l’expérience web.
 
 ---
 
