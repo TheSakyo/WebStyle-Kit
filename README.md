@@ -29,7 +29,7 @@
 
 ---
 
-## 🎨 Purpose / Objectif
+## 🚀 Purpose / Objectif
 
 > **EN:** WebStyle Kit provides lightweight userstyles to enhance, modernize, and customize web interfaces without breaking native UI behavior. Includes modified Stylus themes and forks such as Liquid Glass.  
 ></br>
