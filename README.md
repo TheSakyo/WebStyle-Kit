@@ -44,6 +44,16 @@
 
 ---
 
+## 👀 See Also / Voir aussi
+
+> **EN:** Related projects and extensions from the same ecosystem.  
+> 
+> **FR:** Projets et extensions liés du même écosystème.
+
+* 🧩 **WebScript Kit** → https://github.com/TheSakyo/WebScript-Kit
+  
+---
+
 ## 📜 License / Licence
 
 GPL 3.0
