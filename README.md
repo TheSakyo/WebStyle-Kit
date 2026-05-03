@@ -21,7 +21,7 @@
 
 ---
 
-🔀 Forks / Versions modifiées
+## 🔀 Forks / Versions modifiées
 
 > **EN:** This project may include forked or modified versions of existing styles. In such cases, the filename will explicitly end with `-fork` to indicate it is a customized variant.
 ></br></br>
