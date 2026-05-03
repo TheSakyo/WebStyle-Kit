@@ -42,7 +42,7 @@ styles/
 
 ---
 
-## 🎨 Fonctionnalités
+## 🪄 Fonctionnalités
 
 - Architecture CSS légère  
 - Aucune dépendance externe  
